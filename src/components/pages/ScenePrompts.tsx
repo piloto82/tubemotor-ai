@@ -1,3 +1,4 @@
+
 import React, { useMemo } from 'react';
 import Select from '../ui/Select';
 import Textarea from '../ui/Textarea';
@@ -67,7 +68,6 @@ const ScenePrompts: React.FC<ScenePromptsProps> = ({ data, updateData }) => {
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                        {/* FIX: Added labels to Select components for better accessibility and UI. */}
                         <Select
                             label="Modelo IA"
                             name="aiModel"
