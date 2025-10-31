@@ -1,4 +1,3 @@
-
 import React from 'react';
 
 interface CheckboxProps extends React.InputHTMLAttributes<HTMLInputElement> {

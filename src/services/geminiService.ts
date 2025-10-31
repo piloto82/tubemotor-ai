@@ -92,7 +92,7 @@ export const generateScript = async (data: ScriptCreatorData): Promise<string> =
 - Divida o roteiro em EXATAMENTE ${data.blocks} blocos.
 - **AO FINAL DE CADA BLOCO**, inclua uma ficha técnica dos personagens. **Esta ficha NÃO CONTA para o limite de caracteres do bloco.**
 - **REGRAS PARA A FICHA DE PERSONAGEM:**
-    - **DESCRIÇÃO DE ROUPAS (REGRA CRÍTICA):** Seja EXTREMamente específico. Descreva CADA PEÇA (camisa, calça, etc.) e sua COR. Ex: "uma camisa de flanela xadrez vermelha e preta, jeans azul escuro".
+    - **DESCRIÇÃO DE ROUPAS (REGRA CRÍTICA):** Seja EXTREMAMENTE específico. Descreva CADA PEÇA (camisa, calça, etc.) e sua COR. Ex: "uma camisa de flanela xadrez vermelha e preta, jeans azul escuro".
     - **SEM REFERÊNCIAS VAGAS:** Cada descrição deve ser completa, sem referenciar blocos anteriores.
     - **FORMATAÇÃO (REGRA CRÍTICA):** Use APENAS negrito para os títulos. SEM asteriscos ou bullet points.
 
