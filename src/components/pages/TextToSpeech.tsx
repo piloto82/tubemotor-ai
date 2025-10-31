@@ -213,7 +213,8 @@ const AudioPlayer: React.FC<{ audioDataUrl: string }> = ({ audioDataUrl }) => {
                 {isMenuOpen && (
                     <div className="absolute bottom-full right-0 mb-2 w-48 bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 z-20">
                         <div className="py-1">
-                            <a href={audioDataUrl} download="tubemotor_ai_audio.mp4" className="text-gray-700 px-4 py-2 text-sm flex items-center hover:bg-gray-100">
+                            {/* FIX: Changed download file extension from .mp4 to .wav to match the generated audio format. */}
+                            <a href={audioDataUrl} download="tubemotor_ai_audio.wav" className="text-gray-700 px-4 py-2 text-sm flex items-center hover:bg-gray-100">
                                 <DownloadIcon /> Baixar
                             </a>
                             <div className="text-gray-700 px-4 pt-2 pb-1 text-sm flex items-center"><SpeedIcon /> Velocidade</div>
