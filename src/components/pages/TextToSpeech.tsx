@@ -242,7 +242,6 @@ const TextToSpeech: React.FC<TextToSpeechProps> = ({ data, updateData }) => {
     const { mode, text, temperature, singleVoice, speakers } = formData;
 
     const previewAudioRef = useRef<HTMLAudioElement | null>(null);
-    const [isSettingsOpen, setIsSettingsOpen] = useState(true);
 
     const handleFormDataChange = (field: keyof typeof formData, value: any) => {
       updateData({ formData: { ...formData, [field]: value } });
@@ -305,7 +304,7 @@ const TextToSpeech: React.FC<TextToSpeechProps> = ({ data, updateData }) => {
                     {/* Coluna de Texto e Resultado */}
                     <div className="lg:col-span-2 space-y-6">
                         <Textarea
-                            label="Text"
+                            label="Texto para narração"
                             name="text"
                             id="text"
                             placeholder="Digite ou cole o texto aqui..."
@@ -330,60 +329,71 @@ const TextToSpeech: React.FC<TextToSpeechProps> = ({ data, updateData }) => {
                     </div>
 
                     {/* Coluna de Configurações */}
-                    <div className="bg-white rounded-lg shadow-md h-fit">
-                        <div className="p-6 space-y-6">
-                            <div>
-                                <label className="block text-base font-medium text-gray-900 mb-2">Mode</label>
-                                <div className="flex rounded-md">
-                                    <button type="button" onClick={() => handleFormDataChange('mode', 'single')} className={`w-full py-2 px-4 text-sm font-medium border border-gray-300 -mr-px ${mode === 'single' ? 'bg-blue-600 text-white border-blue-600 z-10' : 'bg-white text-gray-700 hover:bg-gray-50'} rounded-l-md`}>Single-speaker</button>
-                                    <button type="button" onClick={() => handleFormDataChange('mode', 'multi')} className={`w-full py-2 px-4 text-sm font-medium border border-gray-300 ${mode === 'multi' ? 'bg-blue-600 text-white border-blue-600 z-10' : 'bg-white text-gray-700 hover:bg-gray-50'} rounded-r-md`}>Multi-speaker</button>
+                    <div className="space-y-6 p-6 bg-white rounded-lg shadow-md h-fit">
+                        <h2 className="text-2xl font-bold text-gray-800 mb-4 border-b pb-4">Configurações</h2>
+                        
+                        <div className="space-y-2">
+                            <label className="block text-base font-medium text-gray-800">Mode</label>
+                            <div className="flex rounded-md border border-gray-300 p-1 bg-gray-100">
+                                <button type="button" onClick={() => handleFormDataChange('mode', 'single')} className={`w-full py-2 px-4 text-sm font-medium rounded-md ${mode === 'single' ? 'bg-blue-600 text-white shadow' : 'text-gray-700'}`}>Single-speaker</button>
+                                <button type="button" onClick={() => handleFormDataChange('mode', 'multi')} className={`w-full py-2 px-4 text-sm font-medium rounded-md ${mode === 'multi' ? 'bg-blue-600 text-white shadow' : 'text-gray-700'}`}>Multi-speaker</button>
+                            </div>
+                        </div>
+                        
+                        <div className="space-y-4 border-t pt-6">
+                            <h3 className="text-base font-medium text-gray-800">Model settings</h3>
+                             <div>
+                                <label htmlFor="temperature" className="block text-sm font-medium text-gray-700">Temperature</label>
+                                <div className="flex items-center space-x-3 mt-2">
+                                    <input
+                                        id="temperature"
+                                        type="range"
+                                        min="0"
+                                        max="2"
+                                        step="0.1"
+                                        value={temperature}
+                                        onChange={(e) => handleFormDataChange('temperature', Number(e.target.value))}
+                                        className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-slate-700"
+                                    />
+                                    <input
+                                        type="number"
+                                        aria-label="Temperature value"
+                                        id="temperature-value"
+                                        min="0"
+                                        max="2"
+                                        step="0.1"
+                                        value={temperature}
+                                        onChange={(e) => {
+                                            const value = parseFloat(e.target.value);
+                                            if (e.target.value === '') {
+                                                handleFormDataChange('temperature', 0);
+                                            } else if (!isNaN(value)) {
+                                                handleFormDataChange('temperature', Math.max(0, Math.min(2, value)));
+                                            }
+                                        }}
+                                        className="w-16 px-2 py-1 text-center border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                                    />
                                 </div>
                             </div>
-                            
-                            <div className="border-t border-gray-200 pt-6">
-                                <button type="button" onClick={() => setIsSettingsOpen(!isSettingsOpen)} className="flex justify-between items-center w-full text-left">
-                                    <span className="text-base font-medium text-gray-900">Model settings</span>
-                                    <ChevronDownIcon />
-                                </button>
-                                {isSettingsOpen && (
-                                    <div className="mt-4 space-y-4">
-                                        <div>
-                                          <label htmlFor="temperature" className="block text-sm font-medium text-gray-700">Temperature</label>
-                                          <div className="flex items-center space-x-3 mt-2">
-                                              <input
-                                                  id="temperature"
-                                                  type="range"
-                                                  min="0"
-                                                  max="2"
-                                                  step="0.1"
-                                                  value={temperature}
-                                                  onChange={(e) => handleFormDataChange('temperature', Number(e.target.value))}
-                                                  className="w-full h-1.5 bg-gray-200 rounded-full appearance-none cursor-pointer accent-blue-600"
-                                              />
-                                              <span className="text-sm text-gray-800 w-8 text-right tabular-nums">{parseFloat(temperature.toFixed(1))}</span>
-                                          </div>
-                                        </div>
-                                    </div>
-                                )}
-                            </div>
+                        </div>
 
-
+                        <div className="space-y-4 border-t pt-6">
                             {mode === 'single' ? (
-                                <div className="border-t border-gray-200 pt-6">
-                                    <label className="block text-base font-medium text-gray-900 mb-2">Voice</label>
+                                <div>
+                                    <label className="block text-base font-medium text-gray-800 mb-2">Voice</label>
                                     <VoiceSelector selectedVoice={singleVoice} onSelect={(v) => handleFormDataChange('singleVoice', v)} onPreview={handlePreviewVoice} loadingPreview={loadingPreviewVoice} />
                                 </div>
                             ) : (
-                                <div className="border-t border-gray-200 pt-6 space-y-4">
+                                <div className="space-y-6">
                                     <div>
-                                        <label className="block text-base font-medium text-gray-900 mb-2">Locutor 1</label>
+                                        <label className="block text-base font-medium text-gray-800 mb-2">Locutor 1</label>
                                         <Input label="" id="speaker1Name" name="speaker1Name" value={speakers[0].speaker} onChange={e => handleSpeakerChange(0, 'speaker', e.target.value)} placeholder="Nome do Locutor 1" />
                                         <div className="mt-2">
                                             <VoiceSelector selectedVoice={speakers[0].voice} onSelect={(v) => handleSpeakerChange(0, 'voice', v)} onPreview={handlePreviewVoice} loadingPreview={loadingPreviewVoice} />
                                         </div>
                                     </div>
                                     <div>
-                                        <label className="block text-base font-medium text-gray-900 mb-2">Locutor 2</label>
+                                        <label className="block text-base font-medium text-gray-800 mb-2">Locutor 2</label>
                                         <Input label="" id="speaker2Name" name="speaker2Name" value={speakers[1].speaker} onChange={e => handleSpeakerChange(1, 'speaker', e.target.value)} placeholder="Nome do Locutor 2" />
                                         <div className="mt-2">
                                             <VoiceSelector selectedVoice={speakers[1].voice} onSelect={(v) => handleSpeakerChange(1, 'voice', v)} onPreview={handlePreviewVoice} loadingPreview={loadingPreviewVoice} />
@@ -393,8 +403,9 @@ const TextToSpeech: React.FC<TextToSpeechProps> = ({ data, updateData }) => {
                                 </div>
                             )}
                         </div>
-                        <div className="px-6 pb-6">
-                           <Button type="submit" isLoading={isLoading}>Gerar Áudio</Button>
+
+                        <div className="pt-4">
+                            <Button type="submit" isLoading={isLoading}>Gerar Áudio</Button>
                         </div>
                     </div>
                 </div>
