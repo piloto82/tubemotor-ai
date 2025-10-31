@@ -39,7 +39,7 @@ const initialTextToSpeechState: TextToSpeechState = {
     formData: {
         text: '',
         mode: 'single',
-        styleInstructions: 'Read aloud in a warm and friendly tone:',
+        styleInstructions: '',
         temperature: 1.0,
         singleVoice: 'Zephyr',
         speakers: [

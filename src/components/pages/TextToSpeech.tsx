@@ -8,7 +8,7 @@ import ChevronDownIcon from '../icons/ChevronDownIcon';
 import type { TextToSpeechState } from '../../types';
 
 // --- ICONS (in-component to reduce file clutter) ---
-const SpeakerIcon = () => <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" /></svg>;
+const SpeakerIconSvg = () => <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 mr-3 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}><path strokeLinecap="round" strokeLinejoin="round" d="M19.114 5.636a9 9 0 010 12.728M16.463 8.288a5 5 0 010 7.424M6.75 8.25l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75z" /></svg>;
 const PlayIcon = () => <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clipRule="evenodd" /></svg>;
 const PauseIcon = () => <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8 7a1 1 0 00-1 1v4a1 1 0 102 0V8a1 1 0 00-1-1zm4 0a1 1 0 00-1 1v4a1 1 0 102 0V8a1 1 0 00-1-1z" clipRule="evenodd" /></svg>;
 const SpinnerIcon = () => <svg className="animate-spin h-5 w-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>;
@@ -87,7 +87,7 @@ const VoiceSelector: React.FC<{
         <div className="relative" ref={dropdownRef}>
             <button type="button" onClick={() => setIsOpen(!isOpen)} className="w-full bg-white border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 sm:text-sm flex items-center justify-between">
                 <span className="flex items-center">
-                    <SpeakerIcon />
+                    <SpeakerIconSvg />
                     <div>
                         <p className="font-medium text-gray-800">{selectedVoiceDetails?.label}</p>
                         <p className="text-xs text-gray-500">{selectedVoiceDetails?.description}</p>
@@ -213,7 +213,6 @@ const AudioPlayer: React.FC<{ audioDataUrl: string }> = ({ audioDataUrl }) => {
                 {isMenuOpen && (
                     <div className="absolute bottom-full right-0 mb-2 w-48 bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 z-20">
                         <div className="py-1">
-                            {/* FIX: Changed download file extension from .mp4 to .wav to match the generated audio format. */}
                             <a href={audioDataUrl} download="tubemotor_ai_audio.wav" className="text-gray-700 px-4 py-2 text-sm flex items-center hover:bg-gray-100">
                                 <DownloadIcon /> Baixar
                             </a>
@@ -240,7 +239,7 @@ interface TextToSpeechProps {
 // --- MAIN COMPONENT ---
 const TextToSpeech: React.FC<TextToSpeechProps> = ({ data, updateData }) => {
     const { formData, isLoading, error, audioDataUrl, loadingPreviewVoice } = data;
-    const { mode, text, styleInstructions, temperature, singleVoice, speakers } = formData;
+    const { mode, text, temperature, singleVoice, speakers } = formData;
 
     const previewAudioRef = useRef<HTMLAudioElement | null>(null);
     const [isSettingsOpen, setIsSettingsOpen] = useState(true);
@@ -305,14 +304,6 @@ const TextToSpeech: React.FC<TextToSpeechProps> = ({ data, updateData }) => {
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                     {/* Coluna de Texto e Resultado */}
                     <div className="lg:col-span-2 space-y-6">
-                        <Input
-                            label="Style instructions"
-                            id="styleInstructions"
-                            name="styleInstructions"
-                            value={styleInstructions}
-                            onChange={(e) => handleFormDataChange('styleInstructions', e.target.value)}
-                            placeholder="ex: Read in a cheerful voice"
-                        />
                         <Textarea
                             label="Text"
                             name="text"
@@ -339,70 +330,71 @@ const TextToSpeech: React.FC<TextToSpeechProps> = ({ data, updateData }) => {
                     </div>
 
                     {/* Coluna de Configurações */}
-                    <div className="space-y-6 p-6 bg-white rounded-lg shadow-md h-fit">
-                        <h2 className="text-xl font-bold text-gray-800 border-b pb-2">Configurações</h2>
-                        
-                        <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-2">Mode</label>
-                            <div className="flex rounded-md shadow-sm">
-                                <button type="button" onClick={() => handleFormDataChange('mode', 'single')} className={`w-full py-2 px-4 text-sm font-medium border ${mode === 'single' ? 'bg-blue-600 text-white border-blue-600 z-10' : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-50'} rounded-l-md`}>Single-speaker</button>
-                                <button type="button" onClick={() => handleFormDataChange('mode', 'multi')} className={`w-full py-2 px-4 text-sm font-medium border-t border-b border-r ${mode === 'multi' ? 'bg-blue-600 text-white border-blue-600 z-10' : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-50'} rounded-r-md`}>Multi-speaker</button>
+                    <div className="bg-white rounded-lg shadow-md h-fit">
+                        <div className="p-6 space-y-6">
+                            <div>
+                                <label className="block text-base font-medium text-gray-900 mb-2">Mode</label>
+                                <div className="flex rounded-md">
+                                    <button type="button" onClick={() => handleFormDataChange('mode', 'single')} className={`w-full py-2 px-4 text-sm font-medium border border-gray-300 -mr-px ${mode === 'single' ? 'bg-blue-600 text-white border-blue-600 z-10' : 'bg-white text-gray-700 hover:bg-gray-50'} rounded-l-md`}>Single-speaker</button>
+                                    <button type="button" onClick={() => handleFormDataChange('mode', 'multi')} className={`w-full py-2 px-4 text-sm font-medium border border-gray-300 ${mode === 'multi' ? 'bg-blue-600 text-white border-blue-600 z-10' : 'bg-white text-gray-700 hover:bg-gray-50'} rounded-r-md`}>Multi-speaker</button>
+                                </div>
                             </div>
-                        </div>
-                        
-                        <div>
-                            <button type="button" onClick={() => setIsSettingsOpen(!isSettingsOpen)} className="flex justify-between items-center w-full text-left">
-                                <span className="text-sm font-medium text-gray-700">Model settings</span>
-                                <ChevronDownIcon />
-                            </button>
-                            {isSettingsOpen && (
-                                <div className="mt-4 space-y-4">
-                                    <label htmlFor="temperature" className="block text-sm font-medium text-gray-700">Temperature</label>
-                                    <div className="flex items-center space-x-4">
-                                        <input
-                                            id="temperature"
-                                            type="range"
-                                            min="0"
-                                            max="1"
-                                            step="0.1"
-                                            value={temperature}
-                                            onChange={(e) => handleFormDataChange('temperature', Number(e.target.value))}
-                                            className="w-full"
-                                        />
-                                        <span className="text-sm text-gray-600 w-8 text-center">{temperature}</span>
+                            
+                            <div className="border-t border-gray-200 pt-6">
+                                <button type="button" onClick={() => setIsSettingsOpen(!isSettingsOpen)} className="flex justify-between items-center w-full text-left">
+                                    <span className="text-base font-medium text-gray-900">Model settings</span>
+                                    <ChevronDownIcon />
+                                </button>
+                                {isSettingsOpen && (
+                                    <div className="mt-4 space-y-4">
+                                        <div>
+                                          <label htmlFor="temperature" className="block text-sm font-medium text-gray-700">Temperature</label>
+                                          <div className="flex items-center space-x-3 mt-2">
+                                              <input
+                                                  id="temperature"
+                                                  type="range"
+                                                  min="0"
+                                                  max="2"
+                                                  step="0.1"
+                                                  value={temperature}
+                                                  onChange={(e) => handleFormDataChange('temperature', Number(e.target.value))}
+                                                  className="w-full h-1.5 bg-gray-200 rounded-full appearance-none cursor-pointer accent-blue-600"
+                                              />
+                                              <span className="text-sm text-gray-800 w-8 text-right tabular-nums">{parseFloat(temperature.toFixed(1))}</span>
+                                          </div>
+                                        </div>
                                     </div>
+                                )}
+                            </div>
+
+
+                            {mode === 'single' ? (
+                                <div className="border-t border-gray-200 pt-6">
+                                    <label className="block text-base font-medium text-gray-900 mb-2">Voice</label>
+                                    <VoiceSelector selectedVoice={singleVoice} onSelect={(v) => handleFormDataChange('singleVoice', v)} onPreview={handlePreviewVoice} loadingPreview={loadingPreviewVoice} />
+                                </div>
+                            ) : (
+                                <div className="border-t border-gray-200 pt-6 space-y-4">
+                                    <div>
+                                        <label className="block text-base font-medium text-gray-900 mb-2">Locutor 1</label>
+                                        <Input label="" id="speaker1Name" name="speaker1Name" value={speakers[0].speaker} onChange={e => handleSpeakerChange(0, 'speaker', e.target.value)} placeholder="Nome do Locutor 1" />
+                                        <div className="mt-2">
+                                            <VoiceSelector selectedVoice={speakers[0].voice} onSelect={(v) => handleSpeakerChange(0, 'voice', v)} onPreview={handlePreviewVoice} loadingPreview={loadingPreviewVoice} />
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <label className="block text-base font-medium text-gray-900 mb-2">Locutor 2</label>
+                                        <Input label="" id="speaker2Name" name="speaker2Name" value={speakers[1].speaker} onChange={e => handleSpeakerChange(1, 'speaker', e.target.value)} placeholder="Nome do Locutor 2" />
+                                        <div className="mt-2">
+                                            <VoiceSelector selectedVoice={speakers[1].voice} onSelect={(v) => handleSpeakerChange(1, 'voice', v)} onPreview={handlePreviewVoice} loadingPreview={loadingPreviewVoice} />
+                                        </div>
+                                    </div>
+                                    <p className="text-xs text-gray-500">Formate seu texto como um diálogo, por exemplo: <br /> <code className="bg-gray-100 p-1 rounded">{speakers[0].speaker}: Olá!</code><br/><code className="bg-gray-100 p-1 rounded">{speakers[1].speaker}: Oi, tudo bem?</code></p>
                                 </div>
                             )}
                         </div>
-
-
-                        {mode === 'single' ? (
-                            <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">Voice</label>
-                                <VoiceSelector selectedVoice={singleVoice} onSelect={(v) => handleFormDataChange('singleVoice', v)} onPreview={handlePreviewVoice} loadingPreview={loadingPreviewVoice} />
-                            </div>
-                        ) : (
-                            <div className="space-y-4">
-                                <div>
-                                    <label className="block text-sm font-medium text-gray-700 mb-1">Locutor 1</label>
-                                    <Input label="" id="speaker1Name" name="speaker1Name" value={speakers[0].speaker} onChange={e => handleSpeakerChange(0, 'speaker', e.target.value)} placeholder="Nome do Locutor 1" />
-                                    <div className="mt-2">
-                                        <VoiceSelector selectedVoice={speakers[0].voice} onSelect={(v) => handleSpeakerChange(0, 'voice', v)} onPreview={handlePreviewVoice} loadingPreview={loadingPreviewVoice} />
-                                    </div>
-                                </div>
-                                <div>
-                                    <label className="block text-sm font-medium text-gray-700 mb-1">Locutor 2</label>
-                                    <Input label="" id="speaker2Name" name="speaker2Name" value={speakers[1].speaker} onChange={e => handleSpeakerChange(1, 'speaker', e.target.value)} placeholder="Nome do Locutor 2" />
-                                    <div className="mt-2">
-                                        <VoiceSelector selectedVoice={speakers[1].voice} onSelect={(v) => handleSpeakerChange(1, 'voice', v)} onPreview={handlePreviewVoice} loadingPreview={loadingPreviewVoice} />
-                                    </div>
-                                </div>
-                                <p className="text-xs text-gray-500">Formate seu texto como um diálogo, por exemplo: <br /> <code className="bg-gray-100 p-1 rounded">{speakers[0].speaker}: Olá!</code><br/><code className="bg-gray-100 p-1 rounded">{speakers[1].speaker}: Oi, tudo bem?</code></p>
-                            </div>
-                        )}
-
-                        <div className="pt-4">
-                            <Button type="submit" isLoading={isLoading}>Gerar Áudio</Button>
+                        <div className="px-6 pb-6">
+                           <Button type="submit" isLoading={isLoading}>Gerar Áudio</Button>
                         </div>
                     </div>
                 </div>
