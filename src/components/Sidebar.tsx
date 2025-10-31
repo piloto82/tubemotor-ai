@@ -1,5 +1,4 @@
 
-
 import React from 'react';
 import type { Page } from '../types';
 import Logo from './Logo';
