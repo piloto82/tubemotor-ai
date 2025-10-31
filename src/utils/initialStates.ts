@@ -40,7 +40,7 @@ const initialTextToSpeechState: TextToSpeechState = {
         text: '',
         mode: 'single',
         styleInstructions: 'Read aloud in a warm and friendly tone:',
-        temperature: 1,
+        temperature: 1.0,
         singleVoice: 'Zephyr',
         speakers: [
             { speaker: 'Joe', voice: 'Zephyr' },
