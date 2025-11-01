@@ -67,6 +67,8 @@ export const STRUCTURE_FORMULA_OPTIONS = [
             { value: 'hist-testemunhos-transformacao', label: 'Testemunhos e transformação (não religiosos)' },
             { value: 'hist-romance-interracial', label: 'Histórias de Romance interraciais' },
             { value: 'hist-relacionamentos-idades-diferentes', label: 'Histórias de relacionamentos de pessoas com idades diferentes' },
+            { value: 'hist-romance-milionarios', label: 'Histórias de romance com milionários' },
+            { value: 'hist-romance-milionarios-luxo', label: 'Histórias de romance com milionários (Luxo)' },
         ]
     },
     {

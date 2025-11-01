@@ -1,9 +1,9 @@
 
+
 import { GoogleGenAI, GenerateContentResponse, Modality } from "@google/genai";
 import type { ScriptCreatorData, ViralTitlesData, ScriptTranslatorData, ScenePromptsData, ThumbnailPromptsData, ImageGeneratorData, SrtConverterData, TextSplitterData, VideoGeneratorData, CapcutOptimizerData, TextToSpeechData } from '../types';
 
 let ai: GoogleGenAI | null = null;
-// FIX: Removed VITE_API_KEY in favor of process.env.API_KEY as per guidelines.
 
 function getAI() {
   if (!ai) {
@@ -29,7 +29,9 @@ const storyNicheValues = new Set([
   'hist-entrevistas-inspiradoras',
   'hist-testemunhos-transformacao',
   'hist-romance-interracial',
-  'hist-relacionamentos-idades-diferentes'
+  'hist-relacionamentos-idades-diferentes',
+  'hist-romance-milionarios',
+  'hist-romance-milionarios-luxo'
 ]);
 
 const childrenNicheValues = new Set([
@@ -481,11 +483,11 @@ export const generateImages = async (data: ImageGeneratorData): Promise<string[]
 
 export const generateVideo = async (data: VideoGeneratorData): Promise<string> => {
     try {
-        // FIX: Use process.env.API_KEY as per Veo guidelines.
+        // FIX: Use process.env.API_KEY as per guidelines.
         if (!process.env.API_KEY) {
           throw new Error("The API_KEY environment variable has not been set.");
         }
-        // FIX: Create a new instance with the correct API key.
+        // FIX: Create a new instance with the correct API key for Veo.
         const videoAI = new GoogleGenAI({ apiKey: process.env.API_KEY });
 
         const requestPayload: any = {
@@ -515,7 +517,6 @@ export const generateVideo = async (data: VideoGeneratorData): Promise<string> =
         const downloadLink = operation.response?.generatedVideos?.[0]?.video?.uri;
 
         if (downloadLink) {
-             // The response.body contains the MP4 bytes. You must append an API key when fetching from the download link.
             // FIX: Use process.env.API_KEY for fetching the video as per guidelines.
             const response = await fetch(`${downloadLink}&key=${process.env.API_KEY}`);
             if (!response.ok) {

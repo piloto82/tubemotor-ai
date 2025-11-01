@@ -39,6 +39,7 @@ const initialTextToSpeechState: TextToSpeechState = {
     formData: {
         text: '',
         mode: 'single',
+        // FIX: Changed default to empty string for better UX. Placeholder will guide user.
         styleInstructions: '',
         temperature: 1.0,
         singleVoice: 'Zephyr',
