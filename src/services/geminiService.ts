@@ -2,6 +2,8 @@
 
 
 
+
+
 import { GoogleGenAI, GenerateContentResponse, Modality } from "@google/genai";
 import type { ScriptCreatorData, ViralTitlesData, ScriptTranslatorData, ScenePromptsData, ThumbnailPromptsData, ImageGeneratorData, SrtConverterData, TextSplitterData, VideoGeneratorData, CapcutOptimizerData, TextToSpeechData } from '../types';
 
@@ -98,7 +100,6 @@ O agente também prioriza representatividade, inclusão e diversidade de perfis,
 3.  **Retenção:** Mantenha com progressão emocional ou reviravoltas sutis.
 4.  **Personagens:** Crie personagens humanos, falhos e autênticos.
 5.  **Conclusão:** Termine com uma lição emocional sutil, jamais óbvia.
-6.  **Formato Limpo:** O texto deve ser corrido, pronto para narração, sem marcações técnicas como "[CENA 1]".
 
 **🚫 O QUE EVITAR**
 - Finais clichês ou previsíveis.
@@ -108,8 +109,32 @@ O agente também prioriza representatividade, inclusão e diversidade de perfis,
 
 ---
 
+**📝 ESTRUTURA DE SAÍDA E FORMATAÇÃO (REGRAS CRÍTICAS):**
+- Divida o roteiro em **EXATAMENTE ${data.blocks} blocos**.
+- **AO FINAL DE CADA BLOCO**, inclua uma ficha técnica dos personagens que aparecem no bloco. **Esta ficha NÃO CONTA para o limite de caracteres do bloco de história.**
+- **REGRAS PARA A FICHA DE PERSONAGEM:**
+    - **DESCRIÇÃO DE ROUPAS:** Seja EXTREMAMENTE específico. Descreva CADA PEÇA (camisa, calça, sapatos, acessórios) e sua COR e MATERIAL. Ex: "um terno de lã cinza-carvão, camisa de algodão branca, sapatos de couro pretos".
+    - **SEM REFERÊNCIAS VAGAS:** Cada descrição deve ser completa e autocontida para aquele bloco.
+    - **FORMATAÇÃO:** Use APENAS negrito para os títulos da ficha. SEM asteriscos ou bullet points.
+
+**[EXEMPLO DE FORMATAÇÃO DE BLOCO]**
+[BLOCO 1]
+... (texto da história com aproximadamente ${data.charsPerBlock} caracteres) ...
+
+📍 PERSONAGENS DO BLOCO 1:
+**Nome do Personagem:** [Nome]
+**Idade:** [Aproximada]
+**Altura:** [Aproximada]
+**Corpo:** [Descrição detalhada]
+**Cabelos:** [Cor e estilo]
+**Olhos:** [Cor]
+**Roupas:** [Descrição específica de cada peça, cor e material]
+**Postura/Maneirismos:** [Descrição]
+[FIM DO BLOCO 1]
+---
+
 **🏁 INSTRUÇÃO FINAL:**
-Gere o roteiro completo com base no TEMA fornecido, dividido em **EXATAMENTE ${data.blocks} blocos**. Após o ÚLTIMO bloco, adicione a seção "📊 MATERIAIS COMPLEMENTARES" com 3 títulos, 3 ideias de thumbnail, 10 tags SEO e descrições, tudo otimizado para o universo "Hearts of Wall Street".
+Gere o roteiro completo seguindo a estrutura de saída definida acima. Após o ÚLTIMO bloco, adicione a seção "📊 MATERIAIS COMPLEMENTARES" com 3 títulos, 3 ideias de thumbnail, 10 tags SEO e descrições, tudo otimizado para o universo "Hearts of Wall Street".
 `;
     } else if (storyNicheValues.has(data.structure)) {
       // PROMPT MESTRE PARA O NICHO DE HISTÓRIAS
