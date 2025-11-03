@@ -5,6 +5,7 @@
 
 
 
+
 import { GoogleGenAI, GenerateContentResponse, Modality } from "@google/genai";
 import type { ScriptCreatorData, ViralTitlesData, ScriptTranslatorData, ScenePromptsData, ThumbnailPromptsData, ImageGeneratorData, SrtConverterData, TextSplitterData, VideoGeneratorData, CapcutOptimizerData, TextToSpeechData } from '../types';
 
@@ -148,7 +149,7 @@ Gere o roteiro completo seguindo TODAS as regras estritamente, especialmente a f
       prompt = `
 **PROMPT MESTRE DE CRIAÇÃO DE ROTEIRO (NICHO: HISTÓRIAS & EMOÇÃO) - TUBEMOTOR AI**
 
-**OBJETIVO:** Gerar um roteiro de alta retenção para o YouTube, seguindo REGRAS FUNDAMENTAIS de forma estrita. A prioridade máxima e inegociável é respeitar o limite de caracteres por bloco. A geração será considerada uma falha se o limite for ignorado.
+**OBJETIVO:** Gerar um roteiro de alta retenção para o YouTube, focado em narrativa emocional, seguindo REGRAS FUNDAMENTAIS de forma estrita. A prioridade máxima e inegociável é respeitar o limite de caracteres por bloco e a formatação de saída. A geração será considerada uma falha se estas regras forem ignoradas.
 
 **DADOS DE ENTRADA:**
 - Nicho: ${data.niche}
@@ -162,58 +163,69 @@ Gere o roteiro completo seguindo TODAS as regras estritamente, especialmente a f
 
 ---
 
-**🎯 REGRAS FUNDAMENTAIS (OBRIGATÓRIO SEGUIR):**
+**🎯 REGRAS FUNDAMENTAIS DE NARRATIVA E ESTILO (OBRIGATÓRIO SEGUIR):**
 
 **1. LIMITE DE CARACTERES (REGRA Nº 1):**
 - O texto da história de cada bloco DEVE ter **APROXIMADAMENTE ${data.charsPerBlock} caracteres**. É a regra mais importante. NÃO exceda significativamente este limite.
 
-**2. FORMATO DO TEXTO:**
-- **PRIMEIRA PESSOA:** Narrativa em primeira pessoa, contínua, como se a protagonista estivesse contando a história.
+**2. ESTILO NARRATIVO (SEM DIÁLOGO DIRETO - REGRA INEGOCIÁVEL):**
+- **NARRADOR ÚNICO:** A história é para um único narrador (voice-over). Portanto, **É PROIBIDO usar diálogo direto com aspas ou travessões**. Todas as falas de outros personagens devem ser integradas à narrativa de forma indireta.
+    - **EXEMPLO CORRETO:** "Ele se aproximou e perguntou, com a voz baixa, se eu acreditava em segundas chances."
+    - **EXEMPLO INCORRETO:** "Ele se aproximou e disse: - Você acredita em segundas chances?"
+- **PONTO DE VISTA:** A narrativa deve ser em primeira ou terceira pessoa, mas sempre focada nas percepções, pensamentos e sentimentos do protagonista para gerar máxima empatia.
 - **SEM MARCAÇÕES TÉCNICAS:** Texto limpo, pronto para narração, sem "(pausa)", "CENA 1", etc.
-- **FOCO EM PERCEPÇÕES:** Focar nos pensamentos, percepções e sensações da protagonista.
 
-**3. DIÁLOGOS EM PRIMEIRA PESSOA (REGRA CRÍTICA):**
-- **NUNCA USE DIÁLOGO DIRETO:** Falas de outros DEVEM ser integradas à narrativa.
-- **EXEMPLO CORRETO:** "Quando ele me perguntou se eu estava bem, o tom dele era carregado de uma preocupação que me desarmou."
-
-**4. LOCALIZAÇÃO E CULTURA (OBRIGATÓRIO PARA ESTE NICHO):**
+**3. AMBIENTAÇÃO E CULTURA (REGRA CRÍTICA):**
 - **CENÁRIO AMERICANO:** A história DEVE se passar nos Estados Unidos.
-- **NOMES:** Use nomes comuns americanos (Emily, Michael, Sarah).
-- **LUGARES:** Cidades ou estados dos EUA (Beverly Hills, New York).
-- **MOEDA:** DÓLARES ($).
+- **NOMES AMERICANOS:** INDEPENDENTE DO IDIOMA de saída, os nomes dos personagens DEVEM ser americanos (ex: Ethan, Chloe, Julian, Olivia).
+- **REFERÊNCIAS:** Use referências culturais, locais (cidades, estados) e monetárias (dólares) americanas para criar imersão.
 
-**5. TÉCNICAS NARRATIVAS:**
-- **RETENÇÃO:** A cada 25-30 linhas, introduza um gancho (micro-revelação, detalhe sensorial, etc.).
-- **DESCRIções SENSORIAIS:** Enriqueça com detalhes do que a protagonista vê, sente, ouve e cheira.
+**4. TÉCNICAS NARRATIVAS DE RETENÇÃO:**
+- **GANCHOS EMOCIONAIS:** A cada 25-30 linhas, introduza um gancho (uma micro-revelação, um detalhe sensorial, um conflito interno, uma pergunta retórica).
+- **DESCRIÇÕES SENSORIAIS:** Enriqueça a narrativa com detalhes vívidos do que o protagonista vê, sente, ouve e cheira para criar uma experiência imersiva.
 
-**6. ESTRUTURA DE SAÍDA:**
-- Divida o roteiro em EXATAMENTE ${data.blocks} blocos.
-- **AO FINAL DE CADA BLOCO**, inclua uma ficha técnica dos personagens. **Esta ficha NÃO CONTA para o limite de caracteres do bloco.**
-- **REGRAS PARA A FICHA DE PERSONAGEM:**
-    - **DESCRIÇÃO DE ROUPAS (REGRA CRÍTICA):** Seja EXTREMAMENTE específico. Descreva CADA PEÇA (camisa, calça, etc.) e sua COR. Ex: "uma camisa de flanela xadrez vermelha e preta, jeans azul escuro".
-    - **SEM REFERÊNCIAS VAGAS:** Cada descrição deve ser completa, sem referenciar blocos anteriores.
-    - **FORMATAÇÃO (REGRA CRÍTICA):** Use APENAS negrito para os títulos. SEM asteriscos ou bullet points.
+---
 
-[EXEMPLO DE FORMATAÇÃO DE BLOCO]
+**📝 ESTRUTURA DE SAÍDA E FORMATAÇÃO (REGRAS CRÍTICAS E OBRIGATÓRIAS):**
+
+**1. Divisão de Blocos:** Divida o roteiro em **EXATAMENTE ${data.blocks} blocos**.
+
+**2. Ficha de Personagem (OBRIGATÓRIO):** AO FINAL DE CADA BLOCO, inclua uma ficha técnica completa para cada personagem que aparece no bloco. **Esta ficha NÃO CONTA para o limite de caracteres do bloco de história.** A não inclusão desta ficha será considerada uma falha.
+
+**3. REGRAS PARA A FICHA DE PERSONAGEM:**
+    - **DESCRIÇÃO DE ROUPAS:** Seja EXTREMAMENTE específico. Descreva CADA PEÇA (camisa, calça, sapatos, acessórios) e sua COR e MATERIAL. Ex: "um terno de lã cinza-carvão, camisa de algodão branca, sapatos de couro pretos".
+    - **CONSISTÊNCIA:** Se um personagem aparece em blocos consecutivos no mesmo cenário e período de tempo, suas características (especialmente roupas) DEVEM permanecer as mesmas. A descrição só deve mudar se houver uma passagem de tempo ou mudança de local que justifique.
+    - **SEM REFERÊNCIAS VAGAS:** Cada descrição deve ser completa e autocontida para aquele bloco, mesmo que seja repetida do bloco anterior para manter a consistência. Não use "mesmas roupas de antes".
+    - **FORMATAÇÃO:** Use APENAS negrito para os títulos da ficha. SEM asteriscos ou bullet points.
+
+**[EXEMPLO DE FORMATAÇÃO DE BLOCO]**
 [BLOCO 1]
-... (texto da história em primeira pessoa com aproximadamente ${data.charsPerBlock} caracteres) ...
+... (texto da história com aproximadamente ${data.charsPerBlock} caracteres, sem diálogo direto) ...
 
 📍 PERSONAGENS DO BLOCO 1:
-**Nome do Personagem:** [Nome]
+**Nome do Personagem:** [Nome Americano]
 **Idade:** [Aproximada]
 **Altura:** [Aproximada]
 **Corpo:** [Descrição detalhada]
 **Cabelos:** [Cor e estilo]
 **Olhos:** [Cor]
-**Roupas:** [Descrição específica de cada peça e cor]
+**Roupas:** [Descrição específica de cada peça, cor e material]
 **Postura/Maneirismos:** [Descrição]
 [FIM DO BLOCO 1]
 
 ---
 
-**INSTRUÇÃO FINAL:**
-Gere o roteiro completo. Após o ÚLTIMO bloco, adicione a seção "📊 MATERIAIS COMPLEMENTARES".
+**🚫 O QUE EVITAR**
+- **DIÁLOGO DIRETO.**
+- Finais clichês ou previsíveis.
+- Moralismos explícitos.
+- Estereótipos de gênero, classe ou etnia.
+- Linguagem genérica ou adornos vazios.
 
+---
+
+**🏁 INSTRUÇÃO FINAL:**
+Gere o roteiro completo seguindo TODAS as regras estritamente. Após o ÚLTIMO bloco, adicione a seção "📊 MATERIAIS COMPLEMENTARES" com 3 títulos, 3 ideias de thumbnail, 10 tags SEO e descrições, tudo otimizado para o tema.
 `;
     } else if (childrenNicheValues.has(data.structure)) {
       // PROMPT MESTRE PARA O NICHO INFANTIL
