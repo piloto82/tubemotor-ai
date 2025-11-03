@@ -1,5 +1,6 @@
 
 
+
 export const LANGUAGE_OPTIONS = [
     { value: 'pt-br', label: 'Português (Brasil)' },
     { value: 'en-us', label: 'Inglês (EUA)' },
@@ -12,11 +13,19 @@ export const LANGUAGE_OPTIONS = [
 ];
 
 export const TONE_OPTIONS = [
+    { value: 'envolvente-sedutor', label: 'Envolvente e Sedutor' },
     { value: 'envolvente-misterioso', label: 'Envolvente e Misterioso' },
     { value: 'informativo-claro', label: 'Informativo e Claro' },
     { value: 'comico-divertido', label: 'Cômico e Divertido' },
     { value: 'serio-formal', label: 'Sério e Formal' },
     { value: 'inspirador-motivacional', label: 'Inspirador e Motivacional' },
+    { value: 'direto-persuasivo', label: 'Direto e Persuasivo' },
+    { value: 'polemico-provocador', label: 'Polêmico e Provocador' },
+    { value: 'reflexivo-profundo', label: 'Reflexivo e Profundo' },
+    { value: 'aconchegante-conversacional', label: 'Aconchegante e Conversacional' },
+    { value: 'empolgante-energetico', label: 'Empolgante e Energético' },
+    { value: 'narrativo-cinematografico', label: 'Narrativo e Cinematográfico' },
+    { value: 'educativo-didatico', label: 'Educativo e Didático' },
 ];
 
 export const STRUCTURE_FORMULA_OPTIONS = [

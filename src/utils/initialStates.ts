@@ -22,7 +22,7 @@ const initialScriptCreatorState: ScriptCreatorState = {
     blocks: 5,
     charsPerBlock: 500,
     language: 'pt-br',
-    tone: 'envolvente-misterioso',
+    tone: 'envolvente-sedutor',
     structure: 'roteiro-completo-alta-retencao',
     cta: { start: false, middle: false, end: true },
     narrationOnly: false,
@@ -39,7 +39,6 @@ const initialTextToSpeechState: TextToSpeechState = {
     formData: {
         text: '',
         mode: 'single',
-        // FIX: Changed default to empty string for better UX. Placeholder will guide user.
         styleInstructions: '',
         temperature: 1.0,
         singleVoice: 'Zephyr',
