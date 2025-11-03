@@ -1,4 +1,5 @@
 
+
 export const LANGUAGE_OPTIONS = [
     { value: 'pt-br', label: 'Português (Brasil)' },
     { value: 'en-us', label: 'Inglês (EUA)' },
@@ -55,6 +56,7 @@ export const STRUCTURE_FORMULA_OPTIONS = [
     {
         label: "❤️ HISTÓRIAS & EMOÇÃO",
         options: [
+            { value: 'hows-coracoes-de-wall-street', label: 'HOWS - Corações de Wall Street' },
             { value: 'hist-plot-twist', label: 'Histórias com plot twist e reviravolta' },
             { value: 'hist-finais-inteligentes', label: 'Histórias ficcionais com finais inteligentes' },
             { value: 'hist-terror-suspense', label: 'Contos e histórias de terror/suspense' },
