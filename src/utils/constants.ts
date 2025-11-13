@@ -1,6 +1,4 @@
 
-
-
 export const LANGUAGE_OPTIONS = [
     { value: 'pt-br', label: 'Português (Brasil)' },
     { value: 'en-us', label: 'Inglês (EUA)' },
@@ -13,6 +11,7 @@ export const LANGUAGE_OPTIONS = [
 ];
 
 export const TONE_OPTIONS = [
+    { value: 'narrador-quantico', label: 'NARRADOR QUÂNTICO (Ritmo Acelerado)' },
     { value: 'envolvente-sedutor', label: 'Envolvente e Sedutor' },
     { value: 'envolvente-misterioso', label: 'Envolvente e Misterioso' },
     { value: 'informativo-claro', label: 'Informativo e Claro' },
