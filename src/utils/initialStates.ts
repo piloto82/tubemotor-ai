@@ -1,5 +1,4 @@
 
-
 import type {
   ScriptCreatorState,
   MentorState,

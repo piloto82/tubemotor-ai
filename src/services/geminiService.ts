@@ -6,11 +6,9 @@ let ai: GoogleGenAI | null = null;
 
 function getAI() {
   if (!ai) {
-    // FIX: Use process.env.API_KEY as per guidelines.
     if (!process.env.API_KEY) {
       throw new Error("The API_KEY environment variable has not been set.");
     }
-    // FIX: Use process.env.API_KEY as per guidelines.
     ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
   }
   return ai;
@@ -593,11 +591,9 @@ export const generateImages = async (data: ImageGeneratorData): Promise<string[]
 
 export const generateVideo = async (data: VideoGeneratorData): Promise<string> => {
     try {
-        // FIX: Use process.env.API_KEY as per guidelines.
         if (!process.env.API_KEY) {
           throw new Error("The API_KEY environment variable has not been set.");
         }
-        // FIX: Create a new instance with the correct API key for Veo.
         const videoAI = new GoogleGenAI({ apiKey: process.env.API_KEY });
 
         const requestPayload: any = {
@@ -627,7 +623,6 @@ export const generateVideo = async (data: VideoGeneratorData): Promise<string> =
         const downloadLink = operation.response?.generatedVideos?.[0]?.video?.uri;
 
         if (downloadLink) {
-            // FIX: Use process.env.API_KEY for fetching the video as per guidelines.
             const response = await fetch(`${downloadLink}&key=${process.env.API_KEY}`);
             if (!response.ok) {
                 throw new Error(`Falha ao baixar o arquivo de vídeo. Status: ${response.status}`);

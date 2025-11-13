@@ -1,8 +1,6 @@
 
-// FIX: Add Language type definition to be used for internationalization.
 export type Language = 'en' | 'pt';
 
-// FIX: Add Message type definition for chat components.
 export type Message = {
   role: 'user' | 'model';
   text: string;
