@@ -1,3 +1,4 @@
+
 // FIX: Add Language type definition to be used for internationalization.
 export type Language = 'en' | 'pt';
 
@@ -9,6 +10,7 @@ export type Message = {
 
 export type Page = 
   | 'script-creator'
+  | 'mentor'
   | 'viral-titles'
   | 'script-translator'
   | 'scene-prompts'
@@ -45,6 +47,10 @@ export type ScriptCreatorData = {
     mimeType: string;
     data: string;
   };
+};
+
+export type MentorData = {
+  prompt: string;
 };
 
 export type ViralTitlesData = {
@@ -141,6 +147,12 @@ export interface ScriptCreatorState {
   refinementPrompt: string;
 }
 
+export interface MentorState {
+  formData: MentorData;
+  isLoading: boolean;
+  history: Message[];
+}
+
 export interface ViralTitlesState {
   formData: ViralTitlesData;
   isLoading: boolean;
@@ -211,6 +223,7 @@ export interface CapcutOptimizerState {
 
 export type PagesState = {
   'script-creator': ScriptCreatorState;
+  'mentor': MentorState;
   'viral-titles': ViralTitlesState;
   'script-translator': ScriptTranslatorState;
   'scene-prompts': ScenePromptsState;

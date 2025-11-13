@@ -1,5 +1,8 @@
+
+
 import type {
   ScriptCreatorState,
+  MentorState,
   ViralTitlesState,
   ScriptTranslatorState,
   ScenePromptsState,
@@ -35,6 +38,12 @@ const initialScriptCreatorState: ScriptCreatorState = {
   refinementPrompt: '',
 };
 
+const initialMentorState: MentorState = {
+  formData: { prompt: '' },
+  isLoading: false,
+  history: [],
+};
+
 const initialTextToSpeechState: TextToSpeechState = {
     formData: {
         text: '',
@@ -56,6 +65,7 @@ const initialTextToSpeechState: TextToSpeechState = {
 
 export const initialStates: PagesState = {
   'script-creator': initialScriptCreatorState,
+  'mentor': initialMentorState,
   'viral-titles': {
     formData: { topic: '', generationType: 'ready', language: 'pt-br' },
     isLoading: false, result: '',

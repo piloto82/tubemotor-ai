@@ -6,6 +6,7 @@ import Logo from './Logo';
 import ScriptIcon from './icons/ScriptIcon';
 import TitleIcon from './icons/TitleIcon';
 import TranslateIcon from './icons/TranslateIcon';
+import MentorIcon from './icons/MentorIcon';
 import ScenePromptIcon from './icons/ScenePromptIcon';
 import ThumbnailPromptIcon from './icons/ThumbnailPromptIcon';
 import ImageIcon from './icons/ImageIcon';
@@ -77,6 +78,7 @@ const Sidebar: React.FC<SidebarProps> = ({ activePage, setActivePage, isOpen, se
           <div>
             <h2 className="px-4 text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">Criação e Conteúdo</h2>
             <NavLink icon={<ScriptIcon />} label="Criador de Roteiro" isActive={activePage === 'script-creator'} onClick={() => handleNavClick('script-creator')} />
+            <NavLink icon={<MentorIcon />} label="Mentor" isActive={activePage === 'mentor'} onClick={() => handleNavClick('mentor')} />
             <NavLink icon={<TitleIcon />} label="Títulos Virais" isActive={activePage === 'viral-titles'} onClick={() => handleNavClick('viral-titles')} />
             <NavLink icon={<TranslateIcon />} label="Tradutor de Roteiros" isActive={activePage === 'script-translator'} onClick={() => handleNavClick('script-translator')} />
           </div>
