@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import type { Page, PagesState } from './types';
 import Sidebar from './components/Sidebar';
 import ScriptCreator from './components/pages/ScriptCreator';
+import Mentor from './components/pages/Mentor';
 import ViralTitles from './components/pages/ViralTitles';
 import ScriptTranslator from './components/pages/ScriptTranslator';
 import ScenePrompts from './components/pages/ScenePrompts';
@@ -18,6 +19,7 @@ import { initialStates } from './utils/initialStates';
 
 const pageComponents: { [key in Page]: React.ComponentType<any> } = {
   'script-creator': ScriptCreator,
+  'mentor': Mentor,
   'viral-titles': ViralTitles,
   'script-translator': ScriptTranslator,
   'scene-prompts': ScenePrompts,
@@ -33,7 +35,7 @@ const pageComponents: { [key in Page]: React.ComponentType<any> } = {
 };
 
 function App() {
-  const [activePage, setActivePage] = useState<Page>('script-creator');
+  const [activePage, setActivePage] = useState<Page>('mentor');
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [pagesState, setPagesState] = useState<PagesState>(initialStates);
 
@@ -66,19 +68,22 @@ function App() {
         setIsOpen={setIsSidebarOpen}
         resetActivePage={resetActivePage}
       />
-      <main className="flex-1 overflow-y-auto">
+      <main className="flex-1 flex flex-col overflow-y-auto">
         <header className="sticky top-0 bg-white shadow-md p-4 md:hidden z-10">
           <button onClick={() => setIsSidebarOpen(true)} className="text-gray-600">
             <HamburgerIcon />
           </button>
         </header>
-        <div className="relative p-4 sm:p-6 md:p-8">
+        <div className="relative p-4 sm:p-6 md:p-8 flex-1">
           {(Object.keys(pageComponents) as Page[]).map(pageKey => {
             const PageComponent = pageComponents[pageKey];
             const isVisible = activePage === pageKey;
 
-            return (
-              <div key={pageKey} style={{ display: isVisible ? 'block' : 'none' }}>
+            // By conditionally rendering the component (`isVisible && ...`) instead of hiding it with CSS,
+            // we ensure it completely re-mounts with the latest code and state structure.
+            // This solves issues with hot-reloading and stale state.
+            return isVisible && (
+              <div key={pageKey} className="h-full">
                 <PageComponent 
                   data={pagesState[pageKey]}
                   updateData={(updater: any) => updatePageData(pageKey, updater)}
