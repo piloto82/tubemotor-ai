@@ -1,3 +1,4 @@
+
 import React, { useEffect, useRef } from 'react';
 import Textarea from '../ui/Textarea';
 import { askMentor } from '../../services/geminiService';
@@ -27,7 +28,7 @@ const Mentor: React.FC<MentorProps> = ({ data, updateData }) => {
         if (!isLoading) {
             inputRef.current?.focus();
         }
-    }, [isLoading]);
+    }, [isLoading, history]);
 
     const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
         const textarea = e.target;
@@ -38,9 +39,10 @@ const Mentor: React.FC<MentorProps> = ({ data, updateData }) => {
     };
     
     const handleFormSubmit = async (promptText: string) => {
-        if (!promptText || isLoading) return;
+        const trimmedPrompt = promptText.trim();
+        if (!trimmedPrompt || isLoading) return;
         
-        const newUserMessage: Message = { role: 'user', text: promptText };
+        const newUserMessage: Message = { role: 'user', text: trimmedPrompt };
         const updatedHistoryWithUser = [...history, newUserMessage];
 
         updateData(prev => ({
@@ -66,16 +68,11 @@ const Mentor: React.FC<MentorProps> = ({ data, updateData }) => {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        const promptText = formData.prompt.trim();
-        handleFormSubmit(promptText);
-    };
-
-    const handleSuggestionClick = (prompt: string) => {
-        handleFormSubmit(prompt);
+        handleFormSubmit(formData.prompt);
     };
 
     return (
-        <div className="max-w-4xl mx-auto flex flex-col h-[calc(100vh-4rem)] md:h-[calc(100vh-6rem)]">
+        <div className="max-w-4xl mx-auto flex flex-col h-full">
             <header className="mb-4 flex-shrink-0">
                  <h1 className="text-3xl font-bold text-gray-800">Mentor AI</h1>
                  <p className="text-gray-500 mt-1">Converse com seu mentor especialista em canais faceless no YouTube.</p>
@@ -88,16 +85,6 @@ const Mentor: React.FC<MentorProps> = ({ data, updateData }) => {
                             <MentorIcon className="w-16 h-16 text-gray-300" />
                             <h2 className="text-xl font-semibold mt-4 text-gray-700">MENTOR SUPREMO DE YOUTUBE</h2>
                             <p className="mt-1">Como posso te ajudar a dominar o YouTube hoje?</p>
-                            <div className="mt-8 text-sm grid sm:grid-cols-2 gap-4 w-full max-w-md">
-                                <button onClick={() => handleSuggestionClick("Analisa o nicho de estoicismo...")} className="p-4 bg-gray-50 rounded-lg text-left hover:bg-gray-100 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500">
-                                    <p className="font-semibold text-gray-700">Analisar nicho</p>
-                                    <p className="text-gray-400">"Analisa o nicho de estoicismo..."</p>
-                                </button>
-                                <button onClick={() => handleSuggestionClick("Cria um roteiro sobre a história do Bitcoin...")} className="p-4 bg-gray-50 rounded-lg text-left hover:bg-gray-100 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500">
-                                    <p className="font-semibold text-gray-700">Criar roteiro</p>
-                                    <p className="text-gray-400">"Cria um roteiro sobre a história do Bitcoin..."</p>
-                                </button>
-                            </div>
                         </div>
                     ) : (
                         history.map((message, index) => (
