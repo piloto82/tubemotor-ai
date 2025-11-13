@@ -41,10 +41,11 @@ const Mentor: React.FC<MentorProps> = ({ data, updateData }) => {
         if (!promptText || isLoading) return;
         
         const newUserMessage: Message = { role: 'user', text: promptText };
-        
+        const updatedHistoryWithUser = [...history, newUserMessage];
+
         updateData(prev => ({
             ...prev,
-            history: [...prev.history, newUserMessage],
+            history: updatedHistoryWithUser,
             isLoading: true,
             formData: { prompt: '' }
         }));
@@ -53,7 +54,7 @@ const Mentor: React.FC<MentorProps> = ({ data, updateData }) => {
             inputRef.current.style.height = 'auto';
         }
 
-        const responseText = await askMentor([...history, newUserMessage]);
+        const responseText = await askMentor(updatedHistoryWithUser);
         const newModelMessage: Message = { role: 'model', text: responseText };
 
         updateData(prev => ({
@@ -154,4 +155,3 @@ const Mentor: React.FC<MentorProps> = ({ data, updateData }) => {
 };
 
 export default Mentor;
-
