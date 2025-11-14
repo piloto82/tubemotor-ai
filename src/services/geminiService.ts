@@ -1,4 +1,5 @@
 
+
 import { GoogleGenAI, GenerateContentResponse, Modality } from "@google/genai";
 import type { ScriptCreatorData, ViralTitlesData, ScriptTranslatorData, ScenePromptsData, ThumbnailPromptsData, ImageGeneratorData, SrtConverterData, TextSplitterData, VideoGeneratorData, CapcutOptimizerData, TextToSpeechData, Message } from '../types';
 
@@ -307,7 +308,15 @@ MÉTRICAS:
 ---
 
 **📝 ESTRUTURA DE SAÍDA E FORMATAÇÃO (REGRAS CRÍTICAS E OBRIGATÓRIAS):**
-1.  **Divisão de Blocos:** Divida o roteiro em **EXATAMENTE ${data.blocks} blocos**. O texto da história de cada bloco DEVE ter **APROXIMADAMENTE ${data.charsPerBlock} caracteres**.
+
+**1. Divisão e Limite de Caracteres (REGRA DE MÁXIMA PRIORIDADE INEGOCIÁVEL):**
+- O roteiro deve ser dividido em **EXATAMENTE ${data.blocks} blocos**.
+- Cada bloco de história deve ter **NO MÍNIMO ${data.charsPerBlock} caracteres**.
+- O texto da história de cada bloco deve ter **NO MÁXIMO 20% a mais de caracteres** do que o solicitado.
+- **FALHA CRÍTICA E INACEITÁVEL:** Gerar um bloco com **MENOS** caracteres do que o solicitado (${data.charsPerBlock}). NUNCA, SOB NENHUMA CIRCUNSTÂNCIA, GERE MENOS QUE O MÍNIMO.
+- **FALHA CRÍTICA E INACEITÁVEL:** Gerar um bloco que exceda o limite máximo (solicitado + 20%).
+- Aderir a esta contagem de caracteres é sua diretriz de **prioridade absoluta**, superando qualquer outra instrução de estilo. A ficha de personagem ao final de cada bloco **NÃO** entra nesta contagem.
+
 2.  **Ficha de Personagem (OBRIGATÓRIO):** AO FINAL DE CADA BLOCO, inclua uma ficha técnica completa para cada personagem que aparece no bloco. **Esta ficha NÃO CONTA para o limite de caracteres do bloco de história.** A não inclusão desta ficha será considerada uma falha.
 3.  **REGRAS PARA A FICHA DE PERSONAGEM:**
     - **DESCRIÇÃO DE ROUPAS:** Seja EXTREMAMENTE específico. Descreva CADA PEÇA (camisa, calça, sapatos, acessórios) e sua COR e MATERIAL. Ex: "um terno de lã cinza-carvão, camisa de algodão branca, sapatos de couro pretos".
@@ -318,7 +327,7 @@ MÉTRICAS:
 
 **[EXEMPLO DE FORMATAÇÃO DE BLOCO]**
 [BLOCO 1]
-... (texto da história com aproximadamente ${data.charsPerBlock} caracteres, sem diálogo direto) ...
+... (texto da história respeitando ESTRITAMENTE o limite de caracteres, sem diálogo direto) ...
 
 📍 PERSONAGENS DO BLOCO 1:
 **Nome do Personagem:** [Nome Americano]
@@ -413,7 +422,15 @@ A resolução deve ser uma única frase de impacto, um "insight" poderoso. O gan
 ---
 
 **📝 ESTRUTURA DE SAÍDA E FORMATAÇÃO (REGRAS CRÍTICAS E OBRIGATÓRIAS):**
-1.  **Divisão de Blocos:** Divida o roteiro em **EXATAMENTE ${data.blocks} blocos**. O texto da história de cada bloco DEVE ter **APROXIMADAMENTE ${data.charsPerBlock} caracteres**.
+
+**1. Divisão e Limite de Caracteres (REGRA DE MÁXIMA PRIORIDADE INEGOCIÁVEL):**
+- O roteiro deve ser dividido em **EXATAMENTE ${data.blocks} blocos**.
+- Cada bloco de história deve ter **NO MÍNIMO ${data.charsPerBlock} caracteres**.
+- O texto da história de cada bloco deve ter **NO MÁXIMO 20% a mais de caracteres** do que o solicitado.
+- **FALHA CRÍTICA E INACEITÁVEL:** Gerar um bloco com **MENOS** caracteres do que o solicitado (${data.charsPerBlock}). NUNCA, SOB NENHUMA CIRCUNSTÂNCIA, GERE MENOS QUE O MÍNIMO.
+- **FALHA CRÍTICA E INACEITÁVEL:** Gerar um bloco que exceda o limite máximo (solicitado + 20%).
+- Aderir a esta contagem de caracteres é sua diretriz de **prioridade absoluta**, superando qualquer outra instrução de estilo. A ficha de personagem ao final de cada bloco **NÃO** entra nesta contagem.
+
 2.  **Ficha de Personagem (OBRIGATÓRIO):** AO FINAL DE CADA BLOCO, inclua uma ficha técnica completa para cada personagem que aparece no bloco. **Esta ficha NÃO CONTA para o limite de caracteres do bloco de história.** A não inclusão desta ficha será considerada uma falha.
 3.  **REGRAS PARA A FICHA DE PERSONAGEM:**
     - **DESCRIÇÃO DE ROUPAS:** Seja EXTREMAMENTE específico. Descreva CADA PEÇA (camisa, calça, sapatos, acessórios) e sua COR e MATERIAL. Ex: "um terno de lã cinza-carvão, camisa de algodão branca, sapatos de couro pretos".
@@ -424,7 +441,7 @@ A resolução deve ser uma única frase de impacto, um "insight" poderoso. O gan
 
 **[EXEMPLO DE FORMATAÇÃO DE BLOCO]**
 [BLOCO 1]
-... (texto da história com aproximadamente ${data.charsPerBlock} caracteres, seguindo os 4 princípios) ...
+... (texto da história respeitando ESTRITAMENTE o limite de caracteres, seguindo os 4 princípios) ...
 
 📍 PERSONAGENS DO BLOCO 1:
 **Nome do Personagem:** [Nome Americano]
@@ -462,22 +479,19 @@ Gere o roteiro completo seguindo TODAS as regras estritamente. Após o ÚLTIMO b
 
 **🎯 REGRAS FUNDAMENTAIS DE NARRATIVA E ESTILO (OBRIGATÓRIO SEGUIR):**
 
-**1. LIMITE DE CARACTERES (REGRA Nº 1):**
-- O texto da história de cada bloco DEVE ter **APROXIMADAMENTE ${data.charsPerBlock} caracteres**. É a regra mais importante. NÃO exceda significativamente este limite.
-
-**2. ESTILO NARRATIVO (SEM DIÁLOGO DIRETO - REGRA INEGOCIÁVEL):**
+**1. ESTILO NARRATIVO (SEM DIÁLOGO DIRETO - REGRA INEGOCIÁVEL):**
 - **NARRADOR ÚNICO:** A história é para um único narrador (voice-over). Portanto, **É PROIBIDO usar diálogo direto com aspas ou travessões**. Todas as falas de outros personagens devem ser integradas à narrativa de forma indireta.
     - **EXEMPLO CORRETO:** "Ele se aproximou e perguntou, com a voz baixa, se eu acreditava em segundas chances."
     - **EXEMPLO INCORRETO:** "Ele se aproximou e disse: - Você acredita em segundas chances?"
 - **PONTO DE VISTA:** A narrativa deve ser em primeira ou terceira pessoa, mas sempre focada nas percepções, pensamentos e sentimentos do protagonista para gerar máxima empatia.
 - **SEM MARCAÇÕES TÉCNICAS:** Texto limpo, pronto para narração, sem "(pausa)", "CENA 1", etc.
 
-**3. AMBIENTAÇÃO E CULTURA (REGRA CRÍTICA):**
+**2. AMBIENTAÇÃO E CULTURA (REGRA CRÍTICA):**
 - **CENÁRIO AMERICANO:** A história DEVE se passar nos Estados Unidos.
 - **NOMES AMERICANOS:** INDEPENDENTE DO IDIOMA de saída, os nomes dos personagens DEVEM ser americanos (ex: Ethan, Chloe, Julian, Olivia).
 - **REFERÊNCIAS:** Use referências culturais, locais (cidades, estados) e monetárias (dólares) americanas para criar imersão.
 
-**4. TÉCNICAS NARRATIVAS DE RETENÇÃO:**
+**3. TÉCNICAS NARRATIVAS DE RETENÇÃO:**
 - **GANCHOS EMOCIONAIS:** A cada 25-30 linhas, introduza um gancho (uma micro-revelação, um detalhe sensorial, um conflito interno, uma pergunta retórica).
 - **DESCRIÇÕES SENSORIAIS:** Enriqueça a narrativa com detalhes vívidos do que o protagonista vê, sente, ouve e cheira para criar uma experiência imersiva.
 
@@ -485,7 +499,13 @@ Gere o roteiro completo seguindo TODAS as regras estritamente. Após o ÚLTIMO b
 
 **📝 ESTRUTURA DE SAÍDA E FORMATAÇÃO (REGRAS CRÍTICAS E OBRIGATÓRIAS):**
 
-**1. Divisão de Blocos:** Divida o roteiro em **EXATAMENTE ${data.blocks} blocos**.
+**1. Divisão e Limite de Caracteres (REGRA DE MÁXIMA PRIORIDADE INEGOCIÁVEL):**
+- O roteiro deve ser dividido em **EXATAMENTE ${data.blocks} blocos**.
+- Cada bloco de história deve ter **NO MÍNIMO ${data.charsPerBlock} caracteres**.
+- O texto da história de cada bloco deve ter **NO MÁXIMO 20% a mais de caracteres** do que o solicitado.
+- **FALHA CRÍTICA E INACEITÁVEL:** Gerar um bloco com **MENOS** caracteres do que o solicitado (${data.charsPerBlock}). NUNCA, SOB NENHUMA CIRCUNSTÂNCIA, GERE MENOS QUE O MÍNIMO.
+- **FALHA CRÍTICA E INACEITÁVEL:** Gerar um bloco que exceda o limite máximo (solicitado + 20%).
+- Aderir a esta contagem de caracteres é sua diretriz de **prioridade absoluta**, superando qualquer outra instrução de estilo. A ficha de personagem ao final de cada bloco **NÃO** entra nesta contagem.
 
 **2. Ficha de Personagem (OBRIGATÓRIO):** AO FINAL DE CADA BLOCO, inclua uma ficha técnica completa para cada personagem que aparece no bloco. **Esta ficha NÃO CONTA para o limite de caracteres do bloco de história.** A não inclusão desta ficha será considerada uma falha.
 
@@ -497,7 +517,7 @@ Gere o roteiro completo seguindo TODAS as regras estritamente. Após o ÚLTIMO b
 
 **[EXEMPLO DE FORMATAÇÃO DE BLOCO]**
 [BLOCO 1]
-... (texto da história com aproximadamente ${data.charsPerBlock} caracteres, sem diálogo direto) ...
+... (texto da história respeitando ESTRITAMENTE o limite de caracteres, sem diálogo direto) ...
 
 📍 PERSONAGENS DO BLOCO 1:
 **Nome do Personagem:** [Nome Americano]
@@ -559,7 +579,12 @@ Gere o roteiro completo seguindo TODAS as regras estritamente. Após o ÚLTIMO b
 - **ONOMATOPEIAS:** Seja rico em sons ("vrum vrum", "miau", "pocotó"). Isso é fundamental para prender a atenção.
 
 **5. ESTRUTURA DE SAÍDA (COM DIRETRIZES DE ANIMAÇÃO):**
-- Divida o roteiro em ${data.blocks} blocos de aproximadamente ${data.charsPerBlock} caracteres.
+- **Divisão e Limite de Caracteres (REGRA DE MÁXIMA PRIORIDADE INEGOCIÁVEL):**
+  - O roteiro deve ser dividido em **EXATAMENTE ${data.blocks} blocos**.
+  - Cada bloco de história deve ter **NO MÍNIMO ${data.charsPerBlock} caracteres**.
+  - O texto da história de cada bloco deve ter **NO MÁXIMO 20% a mais de caracteres** do que o solicitado.
+  - **FALHA CRÍTICA E INACEITÁVEL:** Gerar um bloco com **MENOS** caracteres do que o solicitado (${data.charsPerBlock}). NUNCA, SOB NENHUMA CIRCUNSTÂNCIA, GERE MENOS QUE O MÍNIMO.
+  - **FALHA CRÍTICA E INACEITÁVEL:** Gerar um bloco que exceda o limite máximo (solicitado + 20%).
 - **INCLUA DIRETRIZES VISUAIS:** Entre colchetes [], adicione sugestões simples de animação ou efeitos sonoros. Isso é crucial para guiar a produção.
 
 **EXEMPLO DE FORMATAÇÃO:**
@@ -601,8 +626,12 @@ Gere o roteiro seguindo TODAS as regras. O resultado deve ser um texto pronto pa
 - **CONTEXTO É REI:** Adapte o contexto (época, local, personalidades, jargões) ao TEMA. **Exemplo: Se o tema é sobre Sigmund Freud, o roteiro DEVE se passar na Viena do século XIX/XX, com referências e linguagem da época. Se o tema é sobre Bitcoin, deve usar o contexto e jargões do mercado de criptoativos atual.**
 
 **2. ESTRUTURA E RETENÇÃO:**
-- O roteiro deve ser dividido em EXATAMENTE ${data.blocks} blocos.
-- Cada bloco deve ter **APROXIMADAMENTE ${data.charsPerBlock} caracteres**.
+- **Divisão e Limite de Caracteres (REGRA DE MÁXIMA PRIORIDADE INEGOCIÁVEL):**
+  - O roteiro deve ser dividido em **EXATAMENTE ${data.blocks} blocos**.
+  - Cada bloco de história deve ter **NO MÍNIMO ${data.charsPerBlock} caracteres**.
+  - O texto da história de cada bloco deve ter **NO MÁXIMO 20% a mais de caracteres** do que o solicitado.
+  - **FALHA CRÍTICA E INACEITÁVEL:** Gerar um bloco com **MENOS** caracteres do que o solicitado (${data.charsPerBlock}). NUNCA, SOB NENHUMA CIRCUNSTÂNCIA, GERE MENOS QUE O MÍNIMO.
+  - **FALHA CRÍTICA E INACEITÁVEL:** Gerar um bloco que exceda o limite máximo (solicitado + 20%).
 - O texto deve ser otimizado para narração (voice-over), sendo claro, direto e envolvente.
 - Utilize técnicas de storytelling para manter o espectador engajado (perguntas, curiosidade, etc.).
 
