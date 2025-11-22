@@ -12,6 +12,7 @@ export const LANGUAGE_OPTIONS = [
 ];
 
 export const TONE_OPTIONS = [
+    { value: 'narrador-quantico', label: 'NARRADOR QUÂNTICO (Ritmo Acelerado)' },
     { value: 'envolvente-sedutor', label: 'Envolvente e Sedutor' },
     { value: 'envolvente-misterioso', label: 'Envolvente e Misterioso' },
     { value: 'informativo-claro', label: 'Informativo e Claro' },
@@ -32,7 +33,6 @@ export const STRUCTURE_FORMULA_OPTIONS = [
         label: "FÓRMULAS DE ALTA RETENÇÃO",
         options: [
             { value: 'roteiro-completo-alta-retencao', label: 'ROTEIRO COMPLETO: ALTA RETENÇÃO' },
-            { value: 'narrador-quantico', label: 'NARRADOR QUÂNTICO (Ritmo Acelerado)' },
         ],
     },
     {
@@ -65,7 +65,7 @@ export const STRUCTURE_FORMULA_OPTIONS = [
     {
         label: "❤️ HISTÓRIAS & EMOÇÃO",
         options: [
-            { value: 'hows-full', label: 'HOWS FULL' },
+            { value: 'hows-full', label: 'HOWS FULL (Agente Ômega v5.0)' },
             { value: 'hows-coracoes-de-wall-street', label: 'HOWS - Corações de Wall Street' },
             { value: 'hist-plot-twist', label: 'Histórias com plot twist e reviravolta' },
             { value: 'hist-finais-inteligentes', label: 'Histórias ficcionais com finais inteligentes' },
